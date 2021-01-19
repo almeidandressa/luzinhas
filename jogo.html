@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+    <title>Luzinhas</title>
+</head>
+<body>
+        <section class="inicio">
+        <div class="caixa-titulo">
+            <hr>
+                <h1>LUZINHAS</h1>
+            <hr>
+        </div>
+        <img class="cerebro" src="img/cerebro.png">
+        <p>Preste atenção em que as luzes vão piscar,
+            para marcar os pontos é preciso clicar nas correspondentes. 
+            Mas não demore muito, você tem apenas 15 segundos!</p>
+        <button class="btn-inicio">PLAY</button>
+        </section>
+    
+        <section class="fase-1">
+            <h1>FASE 1</h1>
+            <hr>
+            <div class="etapas">
+                <img src="img/luz apagada.png">
+                <img src="img/luz apagada.png">
+                <img src="img/luz apagada.png">
+            </div>
+            <p class="pontos"><span>0</span>p</p>
+            <p class="tempo"><span>0</span>s</p>
+            <div class="caixa">
+                <img id="0" src="img/btn-cinza.png">
+                <img id="1" src="img/btn-cinza.png">
+                <img id="2" src="img/btn-cinza.png">
+                <img id="3" src="img/btn-cinza.png">
+                <img id="4" src="img/btn-cinza.png">
+                <img id="5" src="img/btn-cinza.png">
+                <img id="6" src="img/btn-cinza.png">
+                <img id="7" src="img/btn-cinza.png">
+                <img id="8" src="img/btn-cinza.png">
+            </div> 
+        </section>
+
+        <section class="tela-final">
+            <div class="caixa-titulo">
+                <hr>
+                    <h1>GAME OVER</h1>
+                <hr>
+            </div>
+            <h3>SUA PONTUAÇÃO:</h3>
+            <h4><p class="pontos"><span>0</span> PONTOS</p></h4>
+            <p><img src="img/1394962.jpg" alt=""></p>
+            <button class="btn-fim">RETRY</button>
+        </section>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+        </script>
+
+        <script>
+            //imagem mexendo certo
+            function load(){
+                musicaOver = new Audio("musica/instrumental.mp3");
+                musicaJogo = new Audio("musica/maniac.mp3");
+
+                setInterval(function(){
+                $("section.inicio img.cerebro").animate({top:"-15px"},1500)
+                .animate({top:"0px"},1500);
+                },3000);
+            }
+            load();
+
+           function pisca_imagens(quantidade){
+                //pisca luz 
+                if(quantidade>=8){
+                    quantidade = 8;
+                }
+                let id = [];
+                for (i=0; i<quantidade; i++) {
+                    numero = Math.floor(Math.random()*9);
+                    id.push(numero);
+                    for (j=0; j<id.length-1; j++){
+                        if (id[j] == numero){
+                            id.pop();
+                            i--;
+                        }
+                    }
+                }
+
+                (async () => {
+                for(i=0; i<id.length; i++){
+                await trocaImg(id[i]);
+                }
+                })()
+                return id
+
+            }
+
+
+            function zera_cronometro(){
+                soma = 0;
+                contTempo = 0;
+                fase++;
+                $("section.fase-1 p.tempo span").text(soma);
+                $("section.fase-1 h1").text("FASE " + fase);
+                id = pisca_imagens(3+fase-1)
+            }
+
+            function trocaImg(id){
+                var img = document.getElementById(id);
+                setTimeout(function () {img.src = "img/btn-verde.png";}, 1000);
+                setTimeout(function () {img.src = "img/btn-cinza.png";}, 1500);     
+            }
+
+            var fase = 1;
+            var contTempo = 0;
+            var soma = 0;
+
+            $("section.inicio button.btn-inicio").on("click", function(){
+                $("section").hide();
+                $("section.fase-1").show();
+                musicaJogo.play();
+
+                //pisca luz 
+                id = pisca_imagens(3);
+
+                //pontos 
+                $("section.fase-1 div.caixa img").on("click", function(){
+                    var id_imagem = $("section.fase-1 div.caixa img").index(this);
+                    var nenhum_ponto = true
+                    for(i=0; i<id.length;i++){
+                        if (id_imagem == id[i]) {
+                            var contPontos = parseInt($("section.fase-1 p.pontos span").text());
+                            var somaPt = contPontos + 1;
+                            nenhum_ponto = false;
+                            $("section.fase-1 p.pontos span").text(somaPt);
+                            $("section.tela-final p.pontos span").text(somaPt);
+                            
+                        }
+                    }
+                    if(nenhum_ponto){
+                        console.log(i, id.length, id_imagem, id[i])
+                        zera_cronometro();
+                    }
+                    if (fase == 1 && somaPt == 3) {
+                        console.log(i, id.length, id_imagem, id[i])
+                        zera_cronometro();
+                    }
+                    if (fase == 2 && somaPt == 7) {
+                        console.log(i, id.length, id_imagem, id[i])
+                        zera_cronometro();
+                    }
+                    if (fase == 3 && somaPt == 12) {
+                        console.log(i, id.length, id_imagem, id[i])
+                        zera_cronometro();
+                    }
+                });
+                
+
+                //cronometro
+                contagemDeTempo = setInterval(function(){
+                  contTempo = parseInt($("section.fase-1 p.tempo span").text());
+                  soma = contTempo + 1;
+                  if (soma == 15) {                    
+                    id = pisca_imagens(3+fase);
+                    soma = 0;
+                    contTempo = 0;
+                    fase++;
+                  }
+                  $("section.fase-1 p.tempo span").text(soma);
+                  $("section.fase-1 h1").text("FASE " + fase);
+
+                  // tela final
+                  if (fase > 3){
+                    $("section").hide();
+                    $("section.tela-final").show();
+                    musicaJogo.pause();
+                    musicaOver.play();                 
+                  }
+                },1000);
+            });
+
+
+        //botao replay 
+        $("section.tela-final button.btn-fim").on("click", function() {
+        location.reload();
+        });
+        </script>
+</html>

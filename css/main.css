@@ -1,0 +1,119 @@
+body{
+     background-color: black;
+     text-align: center;
+     margin-top: 10vh;
+     font-family: 'Work Sans', sans-serif;
+}
+
+section.fase-1, .fase-2, .fase-3, .tela-final /*, .inicio*/{
+     display: none;
+}
+
+div.caixa-acesa{
+     display: none;
+}
+
+/** ------HOME -------- **/
+
+hr{
+     width: 80vw; 
+     border: 0.5px solid darkcyan;
+}
+
+h1{
+     color: darkcyan;
+     font-size: 50px;
+     font-family: 'Acme', sans-serif;
+}
+
+section.inicio img{
+     margin-top: 5vh;
+     border-radius: 50%;
+     width: 130px;
+     position: relative;
+}
+
+section.inicio p{
+     color: white;
+     margin: 4vh 8vw 4vh 8vw;
+     font-size: 1.25em;
+}
+
+section.inicio .btn-inicio{
+     background: darkcyan;
+     border: none;
+     color: white;
+     font-size: 1.75em;
+     padding: 1.5vh 10vw;
+     border-radius: 30px;
+     font-family: 'Acme', sans-serif;
+     margin-top: 2vh;
+}
+
+/** ------ FASES 1, 2 e 3 ------- **/
+.caixa img{
+     background-image: url('..img/btn-verde.png');
+     margin: 7px;
+}
+
+.caixa{
+     margin-top: 6vh;
+}
+
+.caixa-acesa img{
+     margin: 7px;
+}
+
+.caixa-acesa{
+     margin-top: 6vh;
+}
+
+.etapas img{
+     border-radius: 50%;
+     width: 8vw;
+     margin: 5vh 1vw 2vh 1vw;
+}
+
+p.pontos{
+     color: white;
+     margin: 5vh 8vw 10vh 8vw;
+     font-size: 1.25em;
+     display: inline;
+}
+
+p.tempo{
+     color: white;
+     margin: 5vh 8vw 10vh 8vw;
+     font-size: 1.25em;
+     display: inline;
+}
+
+/** ------ TELA FINAL ------- **/
+section.tela-final img{
+     margin-top: 5vh;
+     border-radius: 50%;
+     margin: 30px;
+     width: 150px;
+}
+
+section.tela-final .btn-fim{
+     background: darkcyan;
+     border: none;
+     color: white;
+     font-size: 1.5em;
+     padding: 2.5vh 10vw;
+     border-radius: 25px;
+     margin: 20px;
+     font-family: 'Acme', sans-serif;
+}
+
+section.tela-final h3{
+     color: white;
+     font-size: 30px;
+     margin-top: 5vh;
+}
+
+section.tela-final h4{
+     color: white;
+     font-size: 28px;
+}
